@@ -46,8 +46,7 @@ func bailianDecides(base string) bool {
 }
 
 // bailianApart reports whether p serves conversations and Bailian's
-// decision model both (Bailian's Token Plan, #1506): its chat models'
-// list never names the decision model, which is kept apart from it.
+// decision model both: a custom mixed provider may still do so.
 func (p Provider) bailianApart() bool {
 	return !p.DecideOnly() && bailianDecides(p.Decide)
 }
@@ -161,8 +160,8 @@ func (p Provider) listsDecisions() bool {
 func decisionsID(id string) string { return id + ".decisions" }
 
 // DecisionModels are the decision models listed separately from a provider's
-// conversations: OpenRouter's own list, a Bailian Token Plan's decision
-// model, or a remote magpie's or a plugin's marked models.
+// conversations: OpenRouter's own list, a custom mixed Bailian provider's
+// decision model, or a remote magpie's or a plugin's marked models.
 func (p Provider) DecisionModels() []catalog.Model {
 	if p.IsPlugin() {
 		if !p.Decides() {

@@ -758,11 +758,17 @@ that only its own host takes: on the Qwen AI platform as `qwen-token-plan`
 `bailian-token-plan` (`token-plan.cn-beijing.maas.aliyuncs.com`). Both serve
 Chat Completions at `/compatible-mode/v1` and Anthropic Messages at
 `/apps/anthropic`, and carry the plans' documented text models for when the
-host lists none. Bailian's also answers its decision model,
-`decision-model-preview`, on System One at `/compatible-mode/v1/systemone`
-with the same key, so a routing group can pick it as its classifier. The
-same model on the Qwen AI platform's pay as you go is `qwen-decision`
-(`maas.qianwenaiapi.com`), and on a Bailian workspace `bailian-decision`.
+host lists none. Bailian's decision model, `decision-model-preview`, is a
+provider of its own: `bailian-decision`, added at its workspace, or at its
+Token Plan · Beijing region for a personal plan's `sk-sp-` key. It answers
+System One at `/compatible-mode/v1/systemone`, so a routing group can pick
+it as its classifier, and the Token Plan itself lists conversation models
+alone (a team plan sees no model it can't answer with). The Qwen AI
+platform's pay-as-you-go decision model is `qwen-decision`
+(`maas.qianwenaiapi.com`). A Token Plan provider saved before the split
+keeps its chat models; its decision model and every group, rule, classifier
+or fallback that named `bailian-token-plan/decision-model-preview` move to
+`bailian-decision/decision-model-preview` on the first start.
 Neither plan has an API for its credits: the console's subscription page
 shows them, so magpie shows no plan usage for these keys.
 
@@ -1317,7 +1323,7 @@ key) rests and the next is asked, and the Routing page's Requests list shows
 every try. It takes no patterns, rules, classifier, effort or fast mode.
 
 ```sh
-magpie group add Jevs models=typesafe/jev-latest,bailian-token-plan/decision-model-preview routing=order
+magpie group add Jevs models=typesafe/jev-latest,bailian-decision/decision-model-preview routing=order
 curl -s localhost:3425/v1/systemone -H 'Authorization: Bearer magpie' \
   -d '{"model":"group/jevs","state":{"message":"fix the login bug"},"questions":{"intent":{"type":"choice","choices":["bug","feature"]}}}'
 ```

@@ -260,6 +260,12 @@ func run(args []string) error {
 	agent.MoveAntigravityEfforts()
 	agent.MoveOffAccountIDs()
 	release()
+	// the Bailian Token Plan's decision model moved to Bailian Decision
+	// Model (#1506); splitting it rewrites providers.json, so it stays
+	// outside the read Hold above
+	if _, err := provider.SplitBailianTokenPlan(); err != nil {
+		fmt.Fprintf(os.Stderr, "magpie: Bailian Token Plan: %v\n", err)
+	}
 	// a provider added, edited or removed, or a list fetched anew, reaches
 	// the model lists agents keep in files of their own
 	catalog.Changed = agent.SyncCatalog

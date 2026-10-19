@@ -529,6 +529,7 @@ func Routings() ([]string, error) {
 // that a read at that moment sees the old catalog or the new one, never a
 // file cut short.
 func store(f file) error {
+	splitBailianTokenPlans(&f)
 	p := Path()
 	if err := os.MkdirAll(filepath.Dir(p), 0o755); err != nil {
 		return err

@@ -33,6 +33,10 @@ func (p Provider) Available() []catalog.Model {
 		return p.decideModels()
 	}
 	ms := p.available()
+	if bailianPlanProvider(p) {
+		// Older fetched lists can contain the decision model too.
+		ms = slices.DeleteFunc(slices.Clone(ms), func(m catalog.Model) bool { return m.ID == BailianDecision })
+	}
 	if p.Decides() {
 		// a gateway's Jev among its chat models, with its window and input
 		ms = slices.Clone(ms)

@@ -349,13 +349,11 @@ var presets = []PresetDef{
 		Note:    "Qwen AI platform · subscription",
 		Website: "https://platform.qianwenai.com/docs/token-plan/overview", KeysURL: "https://platform.qianwenai.com/home/analytics/token-plan/individual",
 		Models: alibabaPlanModels},
-	// Bailian's also answers its decision model, decision-model-preview, on
-	// System One at /compatible-mode/v1/systemone with the same key
-	// (token-plan-decision-model; the personal plan only), so a routing
-	// group can be classified by it
+	// Bailian's Token Plan serves conversation models alone. Its personal
+	// plan's decision model is the bailian-decision preset's Token Plan
+	// region, so a team plan never sees a model it can't answer with.
 	{ID: "bailian-token-plan", Name: "Bailian Token Plan", Short: "Bailian Plan", Icon: "bailian-color", Kind: KindVendor,
 		Chat: "https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1", Anthropic: "https://token-plan.cn-beijing.maas.aliyuncs.com/apps/anthropic",
-		Decide:  "https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1",
 		Note:    "Alibaba Cloud Bailian · subscription",
 		Website: "https://help.aliyun.com/zh/model-studio/token-plan-overview", KeysURL: "https://bailian.console.aliyun.com/cn-beijing/subscription/token-plan/personal",
 		Models: alibabaPlanModels},
